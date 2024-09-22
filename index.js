@@ -52,7 +52,7 @@ app.post('/api/shorturl',urlencodedParser, async (req, res)=> {
   if(findShortUrl.length) {
     res.json({
       original_url : url,
-      shortUrl : findShortUrl[0].id,
+      short_url : findShortUrl[0].id,
     });
     return; 
   }
@@ -61,7 +61,7 @@ app.post('/api/shorturl',urlencodedParser, async (req, res)=> {
 
   res.json({
     original_url : url,
-    shortUrl : id,
+    short_url : id,
   });
 });
 
@@ -69,8 +69,7 @@ app.get('/api/shorturl/:id', (req, res) => {
   const { id } = req.params;
   const findShortUrl = shortUrls.filter((shortUrl) => shortUrl.id == id);
   if(!findShortUrl.length) {
-    res.statusCode = 404;
-    res.send('Url Not Found');
+    res.json({ error : 'Url Not Found'});
     return;
   }
   res.redirect(findShortUrl[0].url);
